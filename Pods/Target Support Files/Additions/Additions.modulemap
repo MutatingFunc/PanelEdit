@@ -1,0 +1,6 @@
+framework module Additions {
+  umbrella header "Additions-umbrella.h"
+
+  export *
+  module * { export * }
+}

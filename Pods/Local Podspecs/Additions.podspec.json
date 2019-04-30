@@ -1,0 +1,22 @@
+{
+  "name": "Additions",
+  "version": "1.0.0",
+  "summary": "Common functions, types, and extensions",
+  "swift_version": "5.0",
+  "description": "Common functions, types, and extensions for use in projects",
+  "homepage": "https://github.com/MutatingFunk/Additions",
+  "license": "MIT",
+  "authors": "James Froggatt",
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source": {
+    "git": "https://github.com/MutatingFunk/Additions.git",
+    "tag": "1.0.0"
+  },
+  "source_files": [
+    "Sources",
+    "Sources/**/*.{h,m,swift}"
+  ],
+  "exclude_files": "Sources/**/Inactive/**/*"
+}

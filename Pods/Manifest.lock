@@ -1,0 +1,30 @@
+PODS:
+  - Additions (1.0.0)
+  - PanelKit (2.0.1)
+
+DEPENDENCIES:
+  - Additions (from `https://github.com/MutatingFunk/Additions`)
+  - PanelKit (from `https://github.com/asmallteapot/panelkit.git`, branch `ellen/swift-4.2`)
+
+EXTERNAL SOURCES:
+  Additions:
+    :git: https://github.com/MutatingFunk/Additions
+  PanelKit:
+    :branch: ellen/swift-4.2
+    :git: https://github.com/asmallteapot/panelkit.git
+
+CHECKOUT OPTIONS:
+  Additions:
+    :commit: f502efea974e194ff336655eb2c82defb525658b
+    :git: https://github.com/MutatingFunk/Additions
+  PanelKit:
+    :commit: 3e148082a04db9c251d58991dffd433174a5a0bf
+    :git: https://github.com/asmallteapot/panelkit.git
+
+SPEC CHECKSUMS:
+  Additions: 484a8c64b2fa0f81c22ed2bad7d4a18ed7f150d0
+  PanelKit: 5dea4109f5a8695f3af1eb0c989ef8f3d9130516
+
+PODFILE CHECKSUM: ac182fea49318b5c6a7839771532fc41a958b7c9
+
+COCOAPODS: 1.5.3
