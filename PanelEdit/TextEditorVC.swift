@@ -13,7 +13,7 @@ import Additions
 class TextEditorVC: UIViewController {
 	typealias Robot = TextEditor
 	
-	private let textView = UITextView()
+	let textView = UITextView()
 	let store: DataStore
 	let onChange: (Int) -> ()
 	init(store: DataStore = .shared, onChange: @escaping (Int) -> ()) {
@@ -37,6 +37,11 @@ class TextEditorVC: UIViewController {
 	override func loadView() {
 		textView.delegate = self
 		self.view = textView
+		self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Items", style: .plain, target: self, action: #selector(showItems))
+	}
+	
+	@objc private func showItems(sender: UIBarButtonItem) {
+		Robot().showSidebar(sender: sender)
 	}
 }
 

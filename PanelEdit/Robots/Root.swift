@@ -18,16 +18,9 @@ struct Root: RootRobot {
 		}
 		if window.rootViewController == nil {
 			window.rootViewController = RootVC()
-			showSidebar()
-			selectRow(nil)
+			//showSidebar(sender: nil)
+			showItem(nil)
 		}
 		return self
-	}
-	
-	@discardableResult
-	func showSidebar() -> Sidebar {
-		return Sidebar()
-			.show()
-			.reload()
 	}
 }

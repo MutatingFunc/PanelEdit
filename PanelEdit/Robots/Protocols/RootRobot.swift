@@ -13,10 +13,17 @@ import Additions
 protocol RootRobot: Robot {}
 extension RootRobot {
 	@discardableResult
-	func selectRow(_ index: Int?) -> TextEditor {
+	func showItem(_ index: Int?) -> TextEditor {
 		return TextEditor()
 			.show(onChange: {Sidebar().reload(index: $0)})
 			.reload(withIndex: index)
+	}
+	
+	@discardableResult
+	func showSidebar(sender: UIBarButtonItem?) -> Sidebar {
+		return Sidebar()
+			.show(sender: sender)
+			.reload()
 	}
 }
 extension RootRobot {

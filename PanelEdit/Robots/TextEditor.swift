@@ -13,10 +13,11 @@ import Additions
 struct TextEditor: RootRobot {
 	@discardableResult
 	func show(onChange: @escaping (Int) -> ()) -> Self {
-		if root.viewControllers.count < 2 {
+		if root.children.isEmpty {
 			let textEditor = TextEditorVC(onChange: onChange)
 			let nav = UINavigationController(rootViewController: textEditor)
-			root.showDetailViewController(nav, sender: nil)
+			root.view.addSubview(nav.view.autolayout())
+			root.addChild(nav)
 		}
 		return self
 	}
@@ -26,9 +27,7 @@ struct TextEditor: RootRobot {
 		textEditor?.index = index
 		return self
 	}
-}
-
-private extension TextEditor {
-	var textEditorNav: UINavigationController? {return root.viewControllers[ifPresent: 1] as? UINavigationController}
+	
+	var textEditorNav: UINavigationController? {return root.children.first as? UINavigationController}
 	var textEditor: TextEditorVC? {return textEditorNav?.viewControllers.first as? TextEditorVC}
 }

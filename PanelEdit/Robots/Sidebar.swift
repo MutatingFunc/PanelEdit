@@ -7,25 +7,29 @@
 //
 
 import UIKit
+import PanelKit
+
+import Additions
 
 struct Sidebar: RootRobot, DataStoreSourced {
 	@discardableResult
-	func show() -> Self {
-		if root.viewControllers.isEmpty {
-			let nav = UINavigationController(rootViewController: SidebarVC())
-			root.viewControllers.append(nav)
-		}
+	func show(sender: UIBarButtonItem?) -> Self {
+		let sidebar = SidebarVC()
+		let panel = PanelViewController(with: sidebar, in: root)
+		sender
+			=>? {panel.present(in: root, from: $0, animated: true)}
+			?? panel.present(in: root, animated: true)
+		root.addPanel(panel)
 		return self
 	}
 	
 	@discardableResult
 	func reload(index: Int? = nil) -> Self {
-		sidebar?.reload(index: index)
+		sidebars.forEach{$0.reload(index: index)}
 		return self
 	}
 }
 
 private extension Sidebar {
-	var sidebarNav: UINavigationController? {return root.viewControllers.first as? UINavigationController}
-	var sidebar: SidebarVC? {return sidebarNav?.viewControllers.first as? SidebarVC}
+	var sidebars: [SidebarVC] {return root.panels.compactMap{$0.contentViewController as? SidebarVC}}
 }

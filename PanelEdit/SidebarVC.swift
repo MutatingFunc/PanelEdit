@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PanelKit
 
 import Additions
 
@@ -18,7 +19,6 @@ class SidebarVC: UIViewController {
 	init(store: DataStore = .shared) {
 		self.store = store
 		super.init(nibName: nil, bundle: nil)
-		self.title = "Items"
 	}
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
@@ -39,6 +39,7 @@ class SidebarVC: UIViewController {
 		tableView.dataSource = self
 		tableView.delegate = self
 		self.view = tableView
+		self.title = "Items"
 	}
 }
 
@@ -52,6 +53,17 @@ extension SidebarVC: UITableViewDataSource, UITableViewDelegate {
 		}
 	}
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		Robot().selectRow(indexPath.row)
+		Robot().showItem(indexPath.row)
 	}
+}
+
+extension SidebarVC: PanelContentDelegate {
+	var preferredPanelContentSize: CGSize {return CGSize(width: 320, height: 500)}
+	var minimumPanelContentSize: CGSize {return CGSize(width: 160, height: 250)}
+	var maximumPanelContentSize: CGSize {return CGSize(width: 500, height: 1000)}
+	
+	var preferredPanelPinnedWidth: CGFloat {return 320}
+	var preferredPanelPinnedHeight: CGFloat {return 500}
+	
+	var shouldAdjustForKeyboard: Bool {return true}
 }
