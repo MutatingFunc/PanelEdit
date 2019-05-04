@@ -12,8 +12,6 @@ import PanelKit
 import Additions
 
 class SidebarVC: UIViewController {
-	typealias Robot = Sidebar
-	
 	private let tableView = UITableView()
 	let store: DataStore
 	init(store: DataStore = .shared) {
@@ -26,7 +24,10 @@ class SidebarVC: UIViewController {
 	
 	var items: [String] {return store.textItems}
 	
-	func reload(index: Int?) {
+	func select(itemAt index: Int?) {
+		tableView.selectRow(at: index =>? {IndexPath(row: $0)}, animated: true, scrollPosition: .none)
+	}
+	func reload(itemAt index: Int?) {
 		let selection = tableView.indexPathForSelectedRow
 		index
 			=>? {tableView.reloadRow(at: $0, with: .none)}
@@ -53,7 +54,7 @@ extension SidebarVC: UITableViewDataSource, UITableViewDelegate {
 		}
 	}
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		Robot().showItem(indexPath.row)
+		Root().showItem(at: indexPath.row)
 	}
 }
 

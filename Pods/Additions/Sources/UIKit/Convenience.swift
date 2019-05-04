@@ -35,7 +35,7 @@ public extension UIAlertController {
 
 public extension UIViewController {
 	@nonobjc func present(in presentingViewController: UIViewController, from source: UIBarButtonItem, animated: Bool, completion: (() -> ())? = nil) {
-		self.modalPresentationStyle = presentingViewController.traitCollection.horizontalSizeClass == .compact ? .overCurrentContext : .popover
+		self.modalPresentationStyle = .popover
 		self.present(in: presentingViewController, animated: animated, completion: completion)
 		self.popoverPresentationController?.barButtonItem = source
 	}

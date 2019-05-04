@@ -13,6 +13,8 @@ class RootVC: UIViewController, PanelManager {
 	var panelContentWrapperView: UIView {return view}
 	var panelContentView: UIView {return self.children.first!.view}
 	var panels: [PanelViewController] = []
+	var allowFloatingPanels: Bool {return true}
+	var allowPanelPinning: Bool {return true}
 	
 	func maximumNumberOfPanelsPinned(at side: PanelPinSide) -> Int {
 		return Int(floor(self.view.bounds.height / 320))

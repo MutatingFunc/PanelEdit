@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol Robot: SelfReturning {
+protocol Robot: SelfReturning, VCStoreSourced {
 	init()
 }

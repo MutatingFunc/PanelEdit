@@ -8,8 +8,4 @@
 
 import UIKit
 
-struct EditablePrefPanel: RootRobot {}
-
-private extension EditablePrefPanel {
-	var editablePrefPanel: UIViewController! {return root.presentedViewController}
-}
+struct EditablePrefPanel: Robot {}

@@ -11,8 +11,6 @@ import UIKit
 import Additions
 
 class TextEditorVC: UIViewController {
-	typealias Robot = TextEditor
-	
 	let textView = UITextView()
 	let store: DataStore
 	let onChange: (Int) -> ()
@@ -41,7 +39,7 @@ class TextEditorVC: UIViewController {
 	}
 	
 	@objc private func showItems(sender: UIBarButtonItem) {
-		Robot().showSidebar(sender: sender)
+		Root().showSidebar(sender: sender, animated: true)
 	}
 }
 

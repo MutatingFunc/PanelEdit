@@ -10,24 +10,40 @@ import UIKit
 
 import Additions
 
-struct TextEditor: RootRobot {
+struct TextEditor: Robot {
+	private var editorParents: VCs<UIViewController> {return vcs(UIViewController.self)}
+	private func addParent(_ parent: UIViewController) {
+		_ = vc(forKeyAppending: UUID(), initial: {parent})
+	}
+	private func editor(in parent: UIViewController) -> TextEditorVC? {
+		return vc(forKeyAppending: parent)
+	}
+	private func nav(in parent: UIViewController) -> UINavigationController? {
+		return vc(forKeyAppending: parent)
+	}
+	
 	@discardableResult
-	func show(onChange: @escaping (Int) -> ()) -> Self {
-		if root.children.isEmpty {
-			let textEditor = TextEditorVC(onChange: onChange)
-			let nav = UINavigationController(rootViewController: textEditor)
-			root.view.addSubview(nav.view.autolayout())
-			root.addChild(nav)
+	func show(in parent: UIViewController, onChange: @escaping (Int) -> ()) -> Self {
+		guard vcs(TextEditorVC.self, matchingKeyPrefixByAppending: parent).isEmpty else {
+			//Only present one editor per parent
+			return self
+		}
+		
+		addParent(parent)
+		
+		if parent.children.isEmpty {
+			let textEditor = vc(forKeyAppending: parent, initial: {TextEditorVC(onChange: onChange)})
+			let textEditorNav = vc(forKeyAppending: parent, initial: {UINavigationController(rootViewController: textEditor)})
+			parent.view.addSubview(textEditorNav.view.autolayout())
+			parent.addChild(textEditorNav)
 		}
 		return self
 	}
 	
 	@discardableResult
-	func reload(withIndex index: Int?) -> Self {
-		textEditor?.index = index
+	func reload(editorIn parent: UIViewController, withIndex index: Int?) -> Self {
+		editor(in: parent)?.index = index
 		return self
 	}
 	
-	var textEditorNav: UINavigationController? {return root.children.first as? UINavigationController}
-	var textEditor: TextEditorVC? {return textEditorNav?.viewControllers.first as? TextEditorVC}
 }

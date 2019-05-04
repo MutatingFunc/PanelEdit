@@ -11,25 +11,31 @@ import PanelKit
 
 import Additions
 
-struct Sidebar: RootRobot, DataStoreSourced {
+struct Sidebar: Robot, DataStoreSourced {
+	private func sidebars(in root: RootVC) -> VCs<SidebarVC> {
+		return vcs(SidebarVC.self, matchingKeyPrefixByAppending: root)
+	}
+	
 	@discardableResult
-	func show(sender: UIBarButtonItem?) -> Self {
-		let sidebar = SidebarVC()
+	func show(in root: RootVC, sender: UIBarButtonItem?, animated: Bool) -> Self {
+		let sidebar = vc(forKeyAppending: root, UUID(), initial: {SidebarVC()})
 		let panel = PanelViewController(with: sidebar, in: root)
 		sender
-			=>? {panel.present(in: root, from: $0, animated: true)}
-			?? panel.present(in: root, animated: true)
+			=>? {panel.present(in: root, from: $0, animated: animated)}
+			?? panel.present(in: root, animated: animated)
 		root.addPanel(panel)
 		return self
 	}
 	
 	@discardableResult
-	func reload(index: Int? = nil) -> Self {
-		sidebars.forEach{$0.reload(index: index)}
+	func select(sidebarsIn root: RootVC, itemAt index: Int? = nil) -> Self {
+		sidebars(in: root).forEach{$0.select(itemAt: index)}
 		return self
 	}
-}
-
-private extension Sidebar {
-	var sidebars: [SidebarVC] {return root.panels.compactMap{$0.contentViewController as? SidebarVC}}
+	
+	@discardableResult
+	func reload(sidebarsIn root: RootVC, itemAt index: Int? = nil) -> Self {
+		sidebars(in: root).forEach{$0.reload(itemAt: index)}
+		return self
+	}
 }

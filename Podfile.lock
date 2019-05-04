@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Additions:
-    :commit: f502efea974e194ff336655eb2c82defb525658b
+    :commit: bf1ff760a1ef64998d3e4aed6482a9760bafc11a
     :git: https://github.com/MutatingFunk/Additions
   PanelKit:
     :commit: 3e148082a04db9c251d58991dffd433174a5a0bf
