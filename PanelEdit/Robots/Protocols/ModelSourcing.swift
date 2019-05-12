@@ -24,10 +24,10 @@ protocol VCStoreSourced {
 extension VCStoreSourced {
 	var vcStore: VCStore {return .shared}
 	
-	func vc<VC: UIViewController>(forKeyAppending components: VCStoreKeyComponent..., initial create: () -> VC) -> VC {
-		return vc(for: VCStore.Key<Self, VC>().appending(components), initial: create)
+	func childVC<VC: UIViewController>(uniquedWith components: VCStoreKeyComponent..., default create: () -> VC) -> VC {
+		return childVC(for: VCStore.Key<Self, VC>().appending(components), default: create)
 	}
-	func vc<VC: UIViewController>(for key: VCStore.Key<Self, VC>, initial create: () -> VC) -> VC {
+	func childVC<VC: UIViewController>(for key: VCStore.Key<Self, VC>, default create: () -> VC) -> VC {
 		if let vc = vcStore[key] {
 			return vc
 		}
@@ -36,17 +36,17 @@ extension VCStoreSourced {
 		return vc
 	}
 	
-	func vc<VC: UIViewController>(_ type: VC.Type = VC.self, forKeyAppending components: VCStoreKeyComponent...) -> VC? {
-		return vc(for: VCStore.Key<Self, VC>().appending(components))
+	func childVC<VC: UIViewController>(_ type: VC.Type = VC.self, uniquedWith components: VCStoreKeyComponent...) -> VC? {
+		return childVC(for: VCStore.Key<Self, VC>().appending(components))
 	}
-	func vc<VC: UIViewController>(for key: VCStore.Key<Self, VC>) -> VC? {
+	func childVC<VC: UIViewController>(for key: VCStore.Key<Self, VC>) -> VC? {
 		return vcStore[key]
 	}
 	
-	func vcs<VC: UIViewController>(_ type: VC.Type = VC.self, matchingKeyPrefixByAppending components: VCStoreKeyComponent...) -> VCs<VC> {
-		return vcs(matchingPrefix: VCStore.Key<Self, VC>().appending(components))
+	func childVCs<VC: UIViewController>(_ type: VC.Type = VC.self, uniquingPrefix components: VCStoreKeyComponent...) -> VCs<VC> {
+		return childVCs(uniquingPrefix: VCStore.Key<Self, VC>().appending(components))
 	}
-	func vcs<VC: UIViewController>(matchingPrefix key: VCStore.Key<Self, VC>) -> VCs<VC> {
+	func childVCs<VC: UIViewController>(uniquingPrefix key: VCStore.Key<Self, VC>) -> VCs<VC> {
 		return vcStore[prefixedBy: key]
 	}
 }

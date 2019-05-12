@@ -11,11 +11,11 @@ import UIKit
 import Additions
 
 struct Root: Robot {
-	private var root: RootVC {return self.vc(initial: RootVC.init)}
+	private var root: RootVC {return self.childVC(default: RootVC.init)}
 	
 	@discardableResult
 	func show(in window: UIWindow) -> Self {
-		assert(vc(RootVC.self) == nil)
+		assert(childVC(RootVC.self) == nil)
 		
 		if window.isKeyWindow == false {
 			window.makeKeyAndVisible()

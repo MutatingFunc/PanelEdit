@@ -13,12 +13,12 @@ import Additions
 
 struct Sidebar: Robot, DataStoreSourced {
 	private func sidebars(in root: RootVC) -> VCs<SidebarVC> {
-		return vcs(SidebarVC.self, matchingKeyPrefixByAppending: root)
+		return childVCs(SidebarVC.self, uniquingPrefix: root)
 	}
 	
 	@discardableResult
 	func show(in root: RootVC, sender: UIBarButtonItem?, animated: Bool) -> Self {
-		let sidebar = vc(forKeyAppending: root, UUID(), initial: {SidebarVC()})
+		let sidebar = childVC(uniquedWith: root, UUID(), default: {SidebarVC()})
 		let panel = PanelViewController(with: sidebar, in: root)
 		sender
 			=>? {panel.present(in: root, from: $0, animated: animated)}

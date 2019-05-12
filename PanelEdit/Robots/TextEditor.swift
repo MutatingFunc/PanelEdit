@@ -11,20 +11,20 @@ import UIKit
 import Additions
 
 struct TextEditor: Robot {
-	private var editorParents: VCs<UIViewController> {return vcs(UIViewController.self)}
+	private var editorParents: VCs<UIViewController> {return childVCs(UIViewController.self)}
 	private func addParent(_ parent: UIViewController) {
-		_ = vc(forKeyAppending: UUID(), initial: {parent})
+		_ = childVC(uniquedWith: UUID(), default: {parent})
 	}
 	private func editor(in parent: UIViewController) -> TextEditorVC? {
-		return vc(forKeyAppending: parent)
+		return childVC(uniquedWith: parent)
 	}
 	private func nav(in parent: UIViewController) -> UINavigationController? {
-		return vc(forKeyAppending: parent)
+		return childVC(uniquedWith: parent)
 	}
 	
 	@discardableResult
 	func show(in parent: UIViewController, onChange: @escaping (Int) -> ()) -> Self {
-		guard vcs(TextEditorVC.self, matchingKeyPrefixByAppending: parent).isEmpty else {
+		guard childVCs(TextEditorVC.self, uniquingPrefix: parent).isEmpty else {
 			//Only present one editor per parent
 			return self
 		}
@@ -32,8 +32,8 @@ struct TextEditor: Robot {
 		addParent(parent)
 		
 		if parent.children.isEmpty {
-			let textEditor = vc(forKeyAppending: parent, initial: {TextEditorVC(onChange: onChange)})
-			let textEditorNav = vc(forKeyAppending: parent, initial: {UINavigationController(rootViewController: textEditor)})
+			let textEditor = childVC(uniquedWith: parent, default: {TextEditorVC(onChange: onChange)})
+			let textEditorNav = childVC(uniquedWith: parent, default: {UINavigationController(rootViewController: textEditor)})
 			parent.view.addSubview(textEditorNav.view.autolayout())
 			parent.addChild(textEditorNav)
 		}
